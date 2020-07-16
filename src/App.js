@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux';
 
-function App() {
+import ContactForm from './components/ContactForm/ContactForm';
+import ContactList from './components/ContactList/ContactList';
+import Filter from './components/Filter/Filter';
+import Layout from './components/Layout/Layout';
+import Toggler from './components/Toggler/Toggler';
+
+import 'react-toastify/dist/ReactToastify.css';
+
+const App = ({ contacts }) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Toggler />
+      <h1>Phonebook</h1>
+      <ContactForm />
+      <h2>Contacts</h2>
+      {contacts.length > 2 && <Filter />}
+      <ContactList />
+    </Layout>
   );
-}
+};
 
-export default App;
+const mapStateToProps = state => ({
+  contacts: state.contacts.contacts,
+});
+
+export default connect(mapStateToProps)(App);
